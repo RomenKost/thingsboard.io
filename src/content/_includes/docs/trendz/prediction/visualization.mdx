@@ -1,175 +1,226 @@
 import ImageGallery from '@components/ImageGallery.astro';
 import InstallationCardGrid from '@components/InstallationCardGrid.astro';
 import DocLink from '@components/DocLink.astro';
-import { Aside } from '@astrojs/starlight/components';
 
-The model page shows one item at a time. To put predictions in a report or on a dashboard, use one of three
-routes:
-
-| Route | Shows | Needs |
-|-------|-------|-------|
-| **Model field in a Trendz view** | The forecast next to the history, for any item | Monitoring on the model |
-| **Rule and target fields** | Time to event and % of target, the latest value | **Business entity field** on the rule or target |
-| **Predicted telemetry in ThingsBoard** | The same results as ordinary ThingsBoard telemetry | **Save telemetry** on the model |
+The model page shows the forecast of one item at a time. To see it next to the measured values, in a report or on
+a ThingsBoard dashboard, build a prediction view: a Trendz line chart with the model field on it.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-result.webp',
-    alt: 'Trendz line chart of site-energy-001 from Sep 17 to Oct 1 2026: measured total as a solid blue line until Sep 24, then the Site energy peak alert forecast as a dashed green line up to Oct 1',
-    caption: 'A Trendz line chart: the measured total, then the forecast as a dashed line.',
+    src: '/src/assets/images/trendz/prediction/vis-view-built.webp',
+    alt: 'Trendz line chart of site-energy-001: the measured total as a solid line, then the Site energy peak alert forecast as a dashed line into the future',
+    caption: 'A prediction view: the measured values, then the forecast.',
   },
 ]} />
 
-## Forecast on a Trendz chart
+## The model field
 
-Every monitored prediction model adds a field to its business entity, named after the model. Put that field on a
-chart, and Trendz draws the forecast after the measured values.
+A model field holds the forecast of a prediction model, for every item of the model. You use it in a view like any
+other field of the business entity.
 
-### Step 1. Create a line chart
-
-On the Trendz home page, click **Create View** and choose **Line**.
+- **When it is created:** Trendz adds the field when you turn on **Periodic refresh** for the model, as described
+  in <DocLink product={props.product} path="prediction/monitoring#set-up-continuous-monitoring">Monitoring & Alarms</DocLink>.
+  When you turn it off, the field is removed. When you turn it on again, the same field comes back, so saved views
+  keep working.
+- **Its name:** the name of the model, here **Site energy peak alert**. When you rename the model, the field is
+  renamed too.
+- **Where to find it:** in the field list of the view editor, under the business entity the model learns from,
+  here **Site Energy**. Model fields are marked with a trend icon.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-create-view.webp',
-    alt: 'Trendz home page with the Create View button highlighted',
-    caption: 'Create View on the home page.',
+    src: '/src/assets/images/trendz/prediction/vis-step-model.webp',
+    alt: 'Field list of the view editor with the Site energy peak alert model field under Site Energy highlighted, and the Y Axis area',
+    caption: 'The model field under its business entity.',
   },
+]} />
+
+## Build a prediction view
+
+### Step 1. Create a line view
+
+On the Trendz home page, click **Create View**.
+
+<ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-view-types.webp',
+    src: '/src/assets/images/trendz/prediction/vis-create-view.webp',
+    alt: 'Trendz home page with the Create View button highlighted',
+    caption: 'Click Create View.',
+  },
+]} />
+
+Choose **Line**. The view editor opens.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-view-types.webp',
     alt: 'Create View menu open with the Line view type highlighted',
     caption: 'Choose Line.',
   },
 ]} />
 
-### Step 2. Add the date and the model field
+### Step 2. Add the fields
 
-1. Drag **Date** to **X Axis**.
-2. Open the business entity of the model, **Site Energy** in this example. The model fields are listed with the
-   entity's telemetry, marked with a trend icon.
-3. Drag the measured telemetry, `total`, and the model field, **Site energy peak alert**, to **Y Axis**.
-4. Drag the entity itself, **Site Energy**, to **Filters** to choose the item.
+Drag **Date** from the field list to **X Axis**.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-model-fields.webp',
-    alt: 'Site Energy field list with the Site energy monthly budget and Site energy peak alert model fields highlighted',
-    caption: 'The model fields, one per monitored model.',
-  },
-  {
-    src: '/src/assets/images/trendz/prediction/visualization-axes.webp',
-    alt: 'View editor with Date on the X axis and total and Site energy peak alert on the Y axis highlighted',
-    caption: 'Date on X, the telemetry and the model field on Y.',
+    src: '/src/assets/images/trendz/prediction/vis-step-date.webp',
+    alt: 'Date field and the X Axis area with DATE (RAW) in it, highlighted',
+    caption: 'Date on X Axis.',
   },
 ]} />
 
-<Aside>
-Only models with monitoring turned on get a field. See <DocLink product={props.product} path="prediction/monitoring">Monitoring & Alarms</DocLink>.
-</Aside>
-
-### Step 3. Set the range, the item, and the grouping
-
-- **Date range:** make it reach into the future, as far as the forecast goes. Here it runs from Sep 17 to Oct 1.
-- **Filter:** pick one item, **site-energy-001**.
-- **Group by:** match the model's grouping, **hour** for this model.
+Open **Site Energy** and drag the model field, **Site energy peak alert**, to **Y Axis**.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-date-range.webp',
-    alt: 'Date picker open with Sep 17 to Oct 1 2026 selected',
-    caption: 'A date range that reaches into the future.',
+    src: '/src/assets/images/trendz/prediction/vis-step-model.webp',
+    alt: 'Site energy peak alert field and the Y Axis area with the field in it, highlighted',
+    caption: 'The model field on Y Axis.',
   },
+]} />
+
+Drag the telemetry the model predicts, **total**, to **Y Axis** as well. The chart then shows the measured values
+and the forecast together.
+
+<ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-filter.webp',
+    src: '/src/assets/images/trendz/prediction/vis-step-total.webp',
+    alt: 'total field and the Y Axis area with total and Site energy peak alert, highlighted',
+    caption: 'The measured telemetry on Y Axis.',
+  },
+]} />
+
+### Step 3. Choose the item, the period, and the grouping
+
+Drag the entity itself, **Site Energy**, to **Filters**.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-step-filter.webp',
+    alt: 'Site Energy entity field and the new Site Energy filter, highlighted',
+    caption: 'The entity in Filters.',
+  },
+]} />
+
+Click the filter and pick one item, **site-energy-001** here.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-filter.webp',
     alt: 'Site Energy filter open with site-energy-001 selected',
-    caption: 'One item in the filter.',
-  },
-  {
-    src: '/src/assets/images/trendz/prediction/visualization-group-by.webp',
-    alt: 'Group by menu open with minute, hour, day, week, month, quarter, and year',
-    caption: 'Group by the model\'s grouping.',
+    caption: 'Pick the item.',
   },
 ]} />
 
-### Step 4. Build the chart
-
-Click **Build report**. The measured values end at the latest sample, and the forecast continues as a dashed line.
-Click the check mark, **Save changes**, to keep the view.
-
-## Model field settings
-
-Click the model field on **Y Axis** to open its settings.
-
-| Setting | What it does |
-|---------|--------------|
-| **Telemetry source** | **Product** reads the forecast stored in Trendz. **Platform** reads the forecast saved to ThingsBoard, and works only when the model has **Save telemetry** on |
-| **Prediction period settings** | Extends the view's date range forward by **Prediction range** and **Prediction unit**. They default to the model's horizon, 7 days here |
+Click the period and choose one that reaches into the future, as far as the forecast goes.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/visualization-telemetry-source.webp',
+    src: '/src/assets/images/trendz/prediction/vis-date-range.webp',
+    alt: 'Date picker open with a period from Sep 22 to Oct 6, 2026',
+    caption: 'A period that reaches into the future.',
+  },
+]} />
+
+Click **group by** and choose the same step as the model, **hour** here.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-group-by.webp',
+    alt: 'Group by menu open with minute, hour, day, week, month, quarter, and year',
+    caption: 'Group by the step of the model.',
+  },
+]} />
+
+### Step 4. Build the view
+
+Click **Build report**.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-build.webp',
+    alt: 'View editor with the Build report button highlighted',
+    caption: 'Click Build report.',
+  },
+]} />
+
+The chart shows the measured values up to the latest reading, and the forecast after it as a dashed line.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-view-built.webp',
+    alt: 'The built line chart: the measured total, then the forecast as a dashed line',
+    caption: 'The measured values, then the forecast.',
+  },
+]} />
+
+### Step 5. Save the view and add it to a dashboard
+
+Click the check mark, choose the collection to save the view in, and click **Save**.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-save.webp',
+    alt: 'View editor with the save check mark highlighted',
+    caption: 'Click the check mark.',
+  },
+  {
+    src: '/src/assets/images/trendz/prediction/vis-save-dialog.webp',
+    alt: 'Save view dialog with the collection selected and the Save button highlighted',
+    caption: 'Choose the collection and click Save.',
+  },
+]} />
+
+Click the share button and choose **Add on New Dashboard**, or **Add on Dashboard** for an existing one.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-share.webp',
+    alt: 'Saved view with the share button highlighted',
+    caption: 'Click the share button.',
+  },
+  {
+    src: '/src/assets/images/trendz/prediction/vis-share-menu.webp',
+    alt: 'Share menu open with Add on New Dashboard highlighted',
+    caption: 'Choose Add on New Dashboard.',
+  },
+]} />
+
+Enter the dashboard name and click **Add**. **Create alias from filter** lets the dashboard switch the widget between
+items, and **Open dashboard in separate window** opens the dashboard right after it is added.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-share-dialog.webp',
+    alt: 'Dashboard dialog with the name Site energy forecasts, the state, Create alias from filter, and the Add button highlighted',
+    caption: 'Name the dashboard and click Add.',
+  },
+  {
+    src: '/src/assets/images/trendz/prediction/vis-dashboard.webp',
+    alt: 'ThingsBoard dashboard Site energy forecasts with the prediction view as a widget: the measured total, then the forecast as a dashed line',
+    caption: 'The view on the ThingsBoard dashboard.',
+  },
+]} />
+
+More options for dashboards are described in <DocLink product={props.product} path="embed-visuals">Embed visuals</DocLink>.
+
+## Prediction field settings
+
+Click the model field on **Y Axis** to open its settings. **Telemetry source** chooses where the forecast is read
+from:
+
+- **Product:** the forecast stored in Trendz.
+- **Platform:** the forecast saved to ThingsBoard. It needs **Save telemetry** on the model.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-telemetry-source.webp',
     alt: 'Settings of the Site energy peak alert field with the Telemetry source switch highlighted, Product selected and Platform beside it',
     caption: 'Telemetry source: Product or Platform.',
   },
-  {
-    src: '/src/assets/images/trendz/prediction/visualization-prediction-period.webp',
-    alt: 'Prediction period settings switched on and highlighted, with a prediction range of 7 and a prediction unit of day',
-    caption: 'Prediction period: 7 days, the model\'s horizon.',
-  },
 ]} />
-
-## Rule and target fields
-
-A Time to Threshold rule or a Hit Target target can add its own field to the business entity. Turn on
-**Business entity field** in the rule's or target's **Actions**.
-
-<ImageGallery images={[
-  {
-    src: '/src/assets/images/trendz/prediction/visualization-rule-field.webp',
-    alt: 'Manage rules dialog of the Site energy peak alert model with the Business entity field switch highlighted under Actions',
-    caption: 'Business entity field on a rule.',
-  },
-]} />
-
-| Field | Value |
-|-------|-------|
-| **Time to event**, from a rule | Time left until the predicted crossing. `0` while the crossing is under way, `-1` when none is predicted |
-| **% of target**, from a target | The predicted value as a share of the target. Blank before the first refresh |
-
-These fields keep only the latest value, so use them in cards and tables rather than in charts over time. For a
-history, set **Telemetry source** to **Platform**. The field then reads the series saved to ThingsBoard.
-
-## Predicted telemetry in ThingsBoard
-
-With **Save telemetry** on, a model writes its results to each item as telemetry. Use them in any ThingsBoard
-widget.
-
-| Key | Holds | Example from site-energy-001 |
-|-----|-------|------------------------------|
-| `_EPD_<key>` | The forecast series, one point per forecast step | `_EPD_site_energy_peak` = 543.6 |
-| `_EPE_<key>` | Time to event of a rule, in milliseconds. `0` during the crossing, `-1` when none is predicted | `_EPE_peak_load_eta` = -1 |
-| `_EPT_<key>` | % of target of a target, one point per day | `_EPT_monthly_budget` = 88.1 |
-
-- **Forecast chart:** a time series widget on `_EPD_<key>`, with a time window that reaches into the future.
-- **Countdown or progress card:** a latest value widget on `_EPE_<key>` or `_EPT_<key>`. Handle `-1` and `0` in
-  the widget settings.
-
-The keys are described in <DocLink product={props.product} path="prediction/monitoring#step-4-turn-on-save-telemetry">Save telemetry</DocLink>.
-
-## Trendz views on ThingsBoard dashboards
-
-A saved Trendz view can be placed on a ThingsBoard dashboard as a widget. The dashboard then shows the same
-forecast chart. See <DocLink product={props.product} path="embed-visuals">Embed visuals</DocLink>.
-
-## Which route to use
-
-| Goal | Route |
-|------|-------|
-| A forecast chart in a Trendz report | Model field in a line chart, **Telemetry source** **Product** |
-| A forecast on a dashboard without Trendz widgets | **Save telemetry**, then a time series widget on `_EPD_<key>` |
-| A countdown or target card | Rule or target field, or a latest value widget on `_EPE_<key>` / `_EPT_<key>` |
-| A countdown or target over time | Rule or target field with **Telemetry source** **Platform** |
-| A fleet sorted by risk | The items table on the model page |
 
 ## Where to go next
 

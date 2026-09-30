@@ -346,6 +346,19 @@ The **⋯** button at the end of each item row — **Refresh**, **Retrain**, and
 same for every intent. See
 <DocLink product={props.product} path="prediction/interface#item-actions">Interface Overview</DocLink>.
 
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/intent-period-total-item-menu.webp',
+    alt: 'Items table of Site energy this month with the ⋯ button at the end of the first row highlighted',
+    caption: 'Click ⋯ at the end of a row.',
+  },
+  {
+    src: '/src/assets/images/trendz/prediction/intent-period-total-item-actions.webp',
+    alt: 'Item row menu of Site energy this month open with Refresh, Retrain, and Delete highlighted',
+    caption: 'Refresh, Retrain, or Delete one item.',
+  },
+]} />
+
 ### Continuous monitoring
 
 The **Continuous monitoring** card shows the monitoring status of this model. What each setting does and how to
@@ -366,6 +379,14 @@ Without a periodic refresh, the measured part of the period stops growing at the
 The **Data status** card and its **Refresh item**, **Refresh all**, and **Retrain all failed** buttons work the
 same for every intent. See
 <DocLink product={props.product} path="prediction/interface#data-status">Interface Overview</DocLink>.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/intent-period-total-data-status.webp',
+    alt: 'Result tab of Site energy this month with the Data status card highlighted, showing the selected item, its last refresh, and the Refresh item, Refresh all, and Retrain all failed buttons',
+    caption: 'The Data status card.',
+  },
+]} />
 
 ### Result page settings
 
@@ -447,6 +468,14 @@ None of them rebuilds the model. Click **Apply changes** and the Result tab foll
     description: 'Chart history and forecast together in Trendz views and ThingsBoard dashboards.',
     icon: '/src/assets/images/trendz/prediction/icon-dashboard.svg',
     accent: '#d97706',
+    hero: true,
+  },
+  {
+    path: 'prediction/models-and-accuracy',
+    title: 'Models & accuracy',
+    description: 'How a model learns, its settings, and how accurate its forecasts are.',
+    icon: '/src/assets/images/trendz/prediction/icon-accuracy.svg',
+    accent: '#7c3aed',
     hero: true,
   },
 ]} />
