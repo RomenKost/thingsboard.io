@@ -15,8 +15,10 @@ go wrong, and they do it weeks or months before you can hear it, feel the heat, 
   },
 ]} />
 
-Trendz reads that signal from the sensors you already connect to ThingsBoard and tells you three things about
-every machine: whether it has changed, how serious that is, and what the most likely cause is.
+Trendz turns the vibration sensors you already connect to ThingsBoard into an online condition monitoring
+system. It reads the raw vibration signal of every machine and tells you three things about it: whether it has
+changed, how serious that is, and what the most likely cause is. Any wired or wireless accelerometer that sends
+raw waveform samples to ThingsBoard, directly or through a gateway, can be analyzed.
 
 <ImageGallery images={[
   {
@@ -120,7 +122,7 @@ machine when you want to see the evidence yourself.
 <RuleNodeCardGrid items={[
   {
     href: '/docs/trendz/vibration/interface/overview-tab/',
-    title: 'Metric monitoring',
+    title: 'Vibration monitoring',
     description: 'Track acceleration RMS, velocity RMS, crest factor, and peak-to-peak per machine, trended against its own normal.',
     image: '/src/assets/images/trendz/vibration/overview-feature-condition.webp',
     alt: 'Overview tab of a vibration model with the metric trends of one machine and the fleet table below',
@@ -142,7 +144,7 @@ machine when you want to see the evidence yourself.
   {
     href: '/docs/trendz/vibration/basics/#iso-10816-1-severity-zones',
     title: 'Severity grading',
-    description: 'Know how bad it is: vibration velocity graded into ISO 10816-1 zones A to D for the machine class.',
+    description: 'Know how bad it is: vibration velocity graded into ISO 10816 / ISO 20816 zones A to D for the machine class.',
     image: '/src/assets/images/trendz/vibration/interface-metrics-solo.webp',
     alt: 'Vibration level view with velocity RMS charted alone against the labelled ISO zone boundaries',
   },
@@ -170,7 +172,7 @@ machine when you want to see the evidence yourself.
   {
     href: '/docs/trendz/vibration/interface/analyzer-tab/#spectrum-view',
     title: 'Spectrum analyzer',
-    description: 'Name the frequencies: FFT with shaft speed, harmonics, sidebands, and bearing fault overlays, in acceleration, velocity, or displacement.',
+    description: 'Name the frequencies: FFT spectrum analysis with shaft speed, harmonics, sidebands, and bearing fault overlays, in acceleration, velocity, or displacement.',
     image: '/src/assets/images/trendz/vibration/overview-feature-spectrum.webp',
     alt: 'Analyzer spectrum with the harmonics of the shaft speed marked',
   },

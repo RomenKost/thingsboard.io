@@ -6,8 +6,8 @@ import { Aside } from '@astrojs/starlight/components';
 **Time to Threshold** answers the question a plain forecast leaves open: when. The model forecasts the metric the
 same way a <DocLink product={props.product} path="prediction/intents/forecast">Forecast</DocLink> model does, then
 reads that forecast with event rules. The moment the forecast first satisfies a rule becomes a predicted event
-with a countdown, a ThingsBoard alarm whose severity grows as the moment approaches, and a telemetry key you can
-put on a dashboard.
+with a countdown of the remaining time until the crossing, a ThingsBoard alarm whose severity grows as the moment
+approaches, and a telemetry key you can put on a dashboard.
 
 The example on this page is a fleet of ten backup generators. Each tank's **fuelLevel** is forecast, and the
 countdown runs to the moment it drops below the **10% reserve** — early enough to send a fuel truck before a
@@ -30,12 +30,24 @@ Use Time to Threshold when you need to know when something happens, not only wha
 | **Refill fuel tanks** | When the fuel level of each generator tank drops below its reserve | Send the truck before a tank reaches the reserve |
 | **Avoid a peak charge** | When the load of each site goes above the contracted 600 kW | Move heavy jobs out of the hours before the crossing |
 | **Replace filters in time** | When the pressure drop across each air filter goes above its limit | Order and replace the filter before the airflow suffers |
+| **Plan battery replacement** | When the battery level of each sensor drops below 20% | Replace the batteries on one trip, before devices go offline |
+| **Prevent tank overflow** | When the level of each storage tank goes above 90% | Schedule a pickup or stop filling before the tank overflows |
 
 Events are searched only inside the forecast, so the prediction horizon is also how far ahead a crossing can be
 found. If you need the value itself rather than the moment, use
 <DocLink product={props.product} path="prediction/intents/forecast">Forecast</DocLink>. For a total over a period,
 use <DocLink product={props.product} path="prediction/intents/period-total">Period Total</DocLink>, and for a goal
 to reach, <DocLink product={props.product} path="prediction/intents/hit-target">Hit Target</DocLink>.
+
+### Predictive alerts and lead time
+
+A classic threshold alarm fires when the live value crosses the limit, often too late to prevent the problem.
+Time to Threshold applies the same limit to the forecast, so the alert fires while the value is still on its way
+to the limit. This is a predictive alert. The time between the alert and the crossing is your lead time: enough
+to send a truck, move a load, or order a part.
+
+Keep your existing threshold alarm in ThingsBoard as a safety net. A forecast can be wrong, and the live alarm
+still catches a crossing that comes sooner than predicted.
 
 ## How to create a model
 

@@ -24,9 +24,17 @@ Trendz format. If they do not yet, start with [Prepare your data](#prepare-your-
 
 ### Install the sensor
 
-Use a vibration sensor that records the raw signal, not only a summary value like RMS. Mount it on the bearing
-housing and set it to record a **sample** at a fixed interval, for example once an hour: about 3 seconds of
-acceleration readings, sent to ThingsBoard as one telemetry value.
+Use a vibration sensor that records the raw signal, not only a summary value like RMS. Many wireless IIoT
+vibration sensors and vibration gateways can do this when set to send the raw time waveform. A sensor that
+reports only RMS, peak, or temperature cannot be analyzed. Mount it on the bearing housing and set it to record a
+**sample** at a fixed interval, for example once an hour: about 3 seconds of acceleration readings, sent to
+ThingsBoard as one telemetry value.
+
+Pick a sample rate of at least twice the highest frequency you want to analyze. Bearing faults and envelope
+analysis need high frequencies, so choose a rate in the kHz range. The 25,600 points per second used in
+[Step 4](#step-4-set-the-sample-rate) covers frequencies up to 12.8 kHz. For a sensor with a ready-made
+ThingsBoard integration, see the
+[**NCD vibration and temperature sensor**](/iot-hub/devices/ncd-vibration-temperature-sensor/) in IoT Hub.
 
 {/* TODO: sensor selection guidance is missing here: which sensors to pick, where to get them, and links to
     the IoT Hub guides once they exist. */}
@@ -52,7 +60,9 @@ with a comma between the axes. Every axis must hold the same number of readings.
 ```
 
 If the sensor sends another shape, such as a JSON array or one reading per message, convert it in the device's
-<DocLink product={Products.PE} path='user-guide/rule-engine'>rule chain</DocLink> before it is saved.
+<DocLink product={Products.PE} path='user-guide/rule-engine'>rule chain</DocLink> before it is saved, for example with a
+<DocLink product={Products.PE} path='reference/rule-engine/nodes/transformation/script'>script transformation node</DocLink>
+that joins the array into one space-separated string.
 
 ## Create your first model
 

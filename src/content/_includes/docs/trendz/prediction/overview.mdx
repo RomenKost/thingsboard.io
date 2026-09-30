@@ -1,10 +1,13 @@
 import ImageGallery from '@components/ImageGallery.astro';
+import DocLink from '@components/DocLink.astro';
 import RuleNodeCardGrid from '@components/RuleNodeCardGrid.astro';
 import InstallationCardGrid from '@components/InstallationCardGrid.astro';
 
-A **prediction model** in Trendz learns from the telemetry history of a device or asset profile and predicts what comes
-next: future values, limit crossings, period totals, or target progress. Predictions return to ThingsBoard as
-telemetry and alarms, with no model code to write.
+A **prediction model** in Trendz is a no-code time series forecasting model for IoT telemetry. It learns from the
+history of every device or asset in a profile and predicts what comes next: future values, limit crossings,
+period totals, or target progress. Trendz picks the forecasting method for each item, so no machine learning
+expertise is needed, and you can bring your own Python model when you want to. Predictions return to
+ThingsBoard as telemetry and alarms, so dashboards and rule chains use them like any other reading.
 
 <ImageGallery images={[
   {
@@ -18,7 +21,8 @@ telemetry and alarms, with no model code to write.
 
 A prediction model is built for one question. Trendz calls this question the intent, and it decides what the
 model shows, what it writes to ThingsBoard, and which alarms it can raise. The four intents read the same history
-in four ways. Pick one to see how it works.
+in four ways, and cover uses such as energy consumption forecasting, fuel and tank levels, battery discharge,
+filter clogging, occupancy, and production output. Pick one to see how it works.
 
 <RuleNodeCardGrid columns={2} items={[
   {
@@ -54,6 +58,8 @@ in four ways. Pick one to see how it works.
 ## How it works in Trendz
 
 A model is trained once from the history. After that, every scheduled refresh updates its forecasts and alarms.
+The <DocLink product={props.product} path="prediction/models-and-accuracy">forecasting methods and accuracy</DocLink> page explains how the
+method is chosen, from Prophet and ARIMA to linear regression, and how accuracy is measured.
 
 <ImageGallery images={[
   {
