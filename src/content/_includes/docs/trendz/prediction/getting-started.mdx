@@ -4,6 +4,16 @@ import InstallationCardGrid from '@components/InstallationCardGrid.astro';
 This guide builds your first prediction model: a forecast of the energy each site will use over the next 7 days.
 It takes a few minutes and no code. Trendz learns from the readings your devices already sent to ThingsBoard.
 
+By the end of this guide, you will have this model:
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/forecast-result-enabled.webp',
+    alt: 'Model page of Site energy forecast with monitoring enabled: a chart of hourly energy with measured values and a dashed 7-day forecast, the Continuous monitoring card with refresh every hour, saved telemetry, and scheduled retrain, and a table of the ten site devices',
+    caption: 'A 7-day energy forecast for every site.',
+  },
+]} />
+
 **Before you start:** you need devices of one profile in ThingsBoard that send a number regularly, for example hourly
 energy, with a few weeks of history.
 
