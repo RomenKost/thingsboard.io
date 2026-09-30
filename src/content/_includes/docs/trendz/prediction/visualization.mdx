@@ -7,9 +7,9 @@ a ThingsBoard dashboard, build a prediction view: a Trendz line chart with the m
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/vis-view-built.webp',
-    alt: 'Trendz line chart of site-energy-001: the measured total as a solid line, then the Site energy peak alert forecast as a dashed line into the future',
-    caption: 'A prediction view: the measured values, then the forecast.',
+    src: '/src/assets/images/trendz/prediction/vis-dashboard-alias.webp',
+    alt: 'ThingsBoard dashboard Site energy forecasts: a list of the site devices and the prediction view of site-energy-001, with the measured total and the forecast as a dashed line',
+    caption: 'A prediction view on a ThingsBoard dashboard.',
   },
 ]} />
 
@@ -37,9 +37,14 @@ other field of the business entity.
 
 ## Build a prediction view
 
+The steps below build one example: a line chart of the measured energy and its forecast, shared on a dashboard.
+The model field works in any Trendz view, like any other field, so you can also put it in a table, a card, or a
+bar chart, and combine it with other fields.
+
 ### Step 1. Create a line view
 
-On the Trendz home page, click **Create View**.
+1. On the Trendz home page, click **Create View**.
+2. Choose **Line**. The view editor opens.
 
 <ImageGallery images={[
   {
@@ -47,11 +52,6 @@ On the Trendz home page, click **Create View**.
     alt: 'Trendz home page with the Create View button highlighted',
     caption: 'Click Create View.',
   },
-]} />
-
-Choose **Line**. The view editor opens.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-view-types.webp',
     alt: 'Create View menu open with the Line view type highlighted',
@@ -61,82 +61,66 @@ Choose **Line**. The view editor opens.
 
 ### Step 2. Add the fields
 
-Drag **Date** from the field list to **X Axis**.
+1. Drag **Date** from the field list to **X Axis**.
+2. Open **Site Energy** and drag the model field, **Site energy peak alert**, to **Y Axis**.
+3. Drag the telemetry the model predicts, **total**, to **Y Axis** as well.
+
+On **Y Axis**, the measured telemetry must be above the model field, as in the third image. A field you drop lands at
+the top of the list, so drag the model field first and the telemetry second. Both use the same aggregation, **SUM**
+here, so the forecast continues the measured line.
 
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-step-date.webp',
     alt: 'Date field and the X Axis area with DATE (RAW) in it, highlighted',
-    caption: 'Date on X Axis.',
+    caption: '1. Date on X Axis.',
   },
-]} />
-
-Open **Site Energy** and drag the model field, **Site energy peak alert**, to **Y Axis**.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-step-model.webp',
     alt: 'Site energy peak alert field and the Y Axis area with the field in it, highlighted',
-    caption: 'The model field on Y Axis.',
+    caption: '2. The model field on Y Axis.',
   },
-]} />
-
-Drag the telemetry the model predicts, **total**, to **Y Axis** as well. The chart then shows the measured values
-and the forecast together.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-step-total.webp',
-    alt: 'total field and the Y Axis area with total and Site energy peak alert, highlighted',
-    caption: 'The measured telemetry on Y Axis.',
+    alt: 'total field and the Y Axis area with total above Site energy peak alert, highlighted',
+    caption: '3. The telemetry above the model field.',
   },
 ]} />
 
-### Step 3. Choose the item, the period, and the grouping
+### Step 3. Set the filter and period
 
-Drag the entity itself, **Site Energy**, to **Filters**.
+1. Drag the entity itself, **Site Energy**, to **Filters**.
+2. Click the filter and pick one item, **site-energy-001** here.
+3. Click the period and choose one that reaches into the future, as far as the forecast goes.
+4. Click **group by** and choose the same step as the model, **hour** here.
 
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-step-filter.webp',
     alt: 'Site Energy entity field and the new Site Energy filter, highlighted',
-    caption: 'The entity in Filters.',
+    caption: '1. The entity in Filters.',
   },
-]} />
-
-Click the filter and pick one item, **site-energy-001** here.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-filter.webp',
     alt: 'Site Energy filter open with site-energy-001 selected',
-    caption: 'Pick the item.',
+    caption: '2. Pick the item.',
   },
-]} />
-
-Click the period and choose one that reaches into the future, as far as the forecast goes.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-date-range.webp',
     alt: 'Date picker open with a period from Sep 22 to Oct 6, 2026',
-    caption: 'A period that reaches into the future.',
+    caption: '3. A period that reaches into the future.',
   },
-]} />
-
-Click **group by** and choose the same step as the model, **hour** here.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-group-by.webp',
     alt: 'Group by menu open with minute, hour, day, week, month, quarter, and year',
-    caption: 'Group by the step of the model.',
+    caption: '4. Group by the step of the model.',
   },
 ]} />
 
 ### Step 4. Build the view
 
-Click **Build report**.
+Click **Build report**. The chart shows the measured values up to the latest reading, and the forecast after it as
+a dashed line.
 
 <ImageGallery images={[
   {
@@ -144,11 +128,6 @@ Click **Build report**.
     alt: 'View editor with the Build report button highlighted',
     caption: 'Click Build report.',
   },
-]} />
-
-The chart shows the measured values up to the latest reading, and the forecast after it as a dashed line.
-
-<ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/vis-view-built.webp',
     alt: 'The built line chart: the measured total, then the forecast as a dashed line',
@@ -156,9 +135,10 @@ The chart shows the measured values up to the latest reading, and the forecast a
   },
 ]} />
 
-### Step 5. Save the view and add it to a dashboard
+### Step 5. Share on a dashboard
 
-Click the check mark, choose the collection to save the view in, and click **Save**.
+Click the check mark, choose the collection to save the view in, and click **Save**. A view has to be saved before
+it can be shared.
 
 <ImageGallery images={[
   {
@@ -188,19 +168,31 @@ Click the share button and choose **Add on New Dashboard**, or **Add on Dashboar
   },
 ]} />
 
-Enter the dashboard name and click **Add**. **Create alias from filter** lets the dashboard switch the widget between
-items, and **Open dashboard in separate window** opens the dashboard right after it is added.
+Enter the dashboard name, turn on **Create alias from filter** (1), and click **Add** (2). With the alias, the
+dashboard gets a list of the items, and the view shows the item picked in it. **Open dashboard in separate window**
+opens the dashboard right after it is added.
 
 <ImageGallery images={[
   {
-    src: '/src/assets/images/trendz/prediction/vis-share-dialog.webp',
-    alt: 'Dashboard dialog with the name Site energy forecasts, the state, Create alias from filter, and the Add button highlighted',
-    caption: 'Name the dashboard and click Add.',
+    src: '/src/assets/images/trendz/prediction/vis-share-alias.webp',
+    alt: 'Dashboard dialog with the name Site energy forecasts, Create alias from filter switched on and marked 1, and the Add button marked 2',
+    caption: 'Turn on Create alias from filter (1) and click Add (2).',
   },
   {
-    src: '/src/assets/images/trendz/prediction/vis-dashboard.webp',
-    alt: 'ThingsBoard dashboard Site energy forecasts with the prediction view as a widget: the measured total, then the forecast as a dashed line',
-    caption: 'The view on the ThingsBoard dashboard.',
+    src: '/src/assets/images/trendz/prediction/vis-dashboard-alias.webp',
+    alt: 'ThingsBoard dashboard Site energy forecasts with a list of the site devices and the prediction view',
+    caption: 'The view on the ThingsBoard dashboard, with the list of items.',
+  },
+]} />
+
+On the dashboard, click any item in the list to see its prediction. The view switches to that item: its measured
+values, and its forecast after them.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/prediction/vis-dashboard-item.webp',
+    alt: 'ThingsBoard dashboard Site energy forecasts with site-energy-004 highlighted in the list and the view showing the measured total and the forecast of site-energy-004',
+    caption: 'Click an item in the list to see its prediction.',
   },
 ]} />
 
