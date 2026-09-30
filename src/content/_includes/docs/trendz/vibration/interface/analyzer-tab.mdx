@@ -52,15 +52,15 @@ Three clicks decide what the charts show.
 
 1. **Metric.** The four tiles above the item table, **Acceleration RMS**, **RMS**, **Crest factor**, and
    **Peak-to-peak**, show the latest values of the selected machine. The highlighted tile is the metric the
-   table's second column lists and the sample navigator colours, so pick the one you want to judge machines by.
+   table's second column lists and the sample navigator colors, so pick the one you want to judge machines by.
 2. **Machine.** Click a row of the item table. The tiles, the navigator, and the chart switch to that machine.
 3. **Sample.** Click a cell of the sample navigator. The chart area loads that sample.
 
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/vibration/analyzer-select-metric.webp',
-    alt: 'Analyzer with the RMS tile highlighted, the item table listing latest RMS, and the navigator coloured by RMS',
-    caption: 'Metric: the highlighted tile sets the table column and the navigator colours.',
+    alt: 'Analyzer with the RMS tile highlighted, the item table listing latest RMS, and the navigator colored by RMS',
+    caption: 'Metric: the highlighted tile sets the table column and the navigator colors.',
   },
   {
     src: '/src/assets/images/trendz/vibration/analyzer-select-item.webp',
@@ -74,9 +74,9 @@ Three clicks decide what the charts show.
   },
 ]} />
 
-The navigator holds every sample of the selected machine in the current window, oldest to newest, coloured from
+The navigator holds every sample of the selected machine in the current window, oldest to newest, colored from
 green at the window's lowest value of the metric to red at its highest. The strip shows 45 cells at a time. A
-longer history scrolls behind them and re-centres on the sample you select. Step with **Earliest sample**,
+longer history scrolls behind them and re-centers on the sample you select. Step with **Earliest sample**,
 **Previous sample**, **Next sample**, and **Latest sample**. The readout line under the strip shows the timestamp
 and the metric value of the loaded sample.
 
@@ -393,7 +393,7 @@ Two cards describe the tracked line and the selected sample.
 Hovering the trend shows one sample: its timestamp, the line's magnitude there, and the change against the median.
 
 {/* TODO: the Spectrum view also has a Waterfall panel (spectra stacked over time with zoom, pan, a time slider,
-    cell inspection, Linear/Log colour scale and Group by). It is hidden behind a disabled flag in the current
+    cell inspection, Linear/Log color scale and Group by). It is hidden behind a disabled flag in the current
     build. Document it here when it ships. */}
 
 ## Envelope view
@@ -421,7 +421,7 @@ Read a line the way you read the spectrum, and let the overlay name it.
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/vibration/analyzer-envelope-spectrum.webp',
-    alt: 'Envelope spectrum with a peak selected and the Selected frequency card labelling it BPFO',
+    alt: 'Envelope spectrum with a peak selected and the Selected frequency card labeling it BPFO',
     caption: 'The Selected frequency card labels the peak with the bearing frequency it sits on.',
   },
   {
@@ -491,7 +491,7 @@ the **Display units** card on the model's **Properties** tab. See
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/vibration/interface-properties-units.webp',
-    alt: 'Properties tab with the Display units card highlighted, showing acceleration in g, velocity in millimetres per second, displacement in micrometres, and frequency in hertz',
+    alt: 'Properties tab with the Display units card highlighted, showing acceleration in g, velocity in millimeters per second, displacement in micrometers, and frequency in hertz',
     caption: 'The Display units card on the Properties tab.',
   },
 ]} />
@@ -554,7 +554,7 @@ Marks lines at equal steps on both sides of the selected frequency.
 | **Count each side** | Number of lines on each side |
 
 **How to read it:** select the carrier peak and set **Spacing** to the frequency you suspect modulates it. If the
-marks land on the neighbouring peaks, that frequency is modulating the carrier.
+marks land on the neighboring peaks, that frequency is modulating the carrier.
 
 **Example:** the carrier is 866 Hz and the spacing is 34 Hz shaft speed. The first pair of
 marks, at 832 Hz and 900 Hz, lands on peaks, which points to modulation at shaft speed. The outer marks fall between
