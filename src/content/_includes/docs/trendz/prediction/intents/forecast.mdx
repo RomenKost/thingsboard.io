@@ -2,7 +2,6 @@ import ImageGallery from '@components/ImageGallery.astro';
 import DocLink from '@components/DocLink.astro';
 import InstallationCardGrid from '@components/InstallationCardGrid.astro';
 import { Aside } from '@astrojs/starlight/components';
-import { TRENDZ_VER } from '@data/versions';
 
 **Forecast** predicts the future values of one metric for every device or asset in a profile. Trendz learns each
 item's own history and extends it over a prediction horizon: the next 24 hours, 7 days, 30 days, or a range of
@@ -17,7 +16,7 @@ your own. Ten energy meters give ten forecasts, each refreshed as new readings a
 ]} />
 
 <Aside type="note">
-Prediction models created before Trendz {TRENDZ_VER} were migrated to this intent: they open as Forecast models,
+Prediction models created before Trendz 1.16.0 were migrated to this intent: they open as Forecast models,
 with the horizon and the training period they were built with.
 </Aside>
 
