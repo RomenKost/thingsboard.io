@@ -9,11 +9,15 @@ reads that forecast with event rules. The moment the forecast first satisfies a 
 with a countdown, a ThingsBoard alarm whose severity grows as the moment approaches, and a telemetry key you can
 put on a dashboard.
 
+The example on this page is a fleet of ten backup generators. Each tank's **fuelLevel** is forecast, and the
+countdown runs to the moment it drops below the **10% reserve** — early enough to send a fuel truck before a
+generator runs dry.
+
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-result.webp',
     alt: 'Result tab of a Time to Threshold model with the Next event card, the chart with the threshold line and the event marker, and the items table sorted by time to event',
-    caption: 'Ten retail sites against a 760 kWh peak: site-energy-006 crosses it in about 20 hours.',
+    caption: 'Ten backup generators against a 10% fuel reserve: generator-003 is predicted to reach it in about 3 days.',
   },
 ]} />
 
@@ -115,7 +119,7 @@ against.
 ]} />
 
 **Predicted metric** — pick the telemetry key to forecast and the aggregation applied to it during training. The
-rule in step 4 is checked against this metric:
+rule in step 4 is checked against this metric. In the example it is **fuelLevel**, averaged per hour:
 
 <ImageGallery images={[
   {
@@ -180,7 +184,8 @@ graded as weak:
 
 ### Step 4: Define the threshold
 
-The fourth step creates the first event rule.
+The fourth step creates the first event rule — in the example, **Low fuel**, which fires as the forecast **drops
+below 10**, the reserve.
 
 <Aside type="tip">
 Not sure what to specify? Leave the step empty and build the model without it. Rules can be added at any time in
@@ -205,8 +210,8 @@ Not sure what to specify? Leave the step empty and build the model without it. R
   },
   {
     src: '/src/assets/images/trendz/prediction/ttt-s4-condition.webp',
-    alt: 'Define the threshold step with the rule name Peak load and a Simple condition of goes above 600',
-    caption: 'Rule "Peak load": the event starts when the forecast goes above 600.',
+    alt: 'Define the threshold step with the rule name Low fuel and a Simple condition of drops below 10',
+    caption: 'Rule "Low fuel": the event starts when the forecast drops below 10.',
   },
 ]} />
 
@@ -248,14 +253,14 @@ switches rules when the model has several.
   {
     src: '/src/assets/images/trendz/prediction/ttt-next-event.webp',
     alt: 'Next event card showing the time to event, the threshold, the predicted value, the crossing time, and the alarm severity',
-    caption: 'The next crossing of site-energy-006 is about 20 hours away, so its alarm is MAJOR.',
+    caption: 'generator-003 is predicted to drop below the reserve in about 3 days, so its alarm is MAJOR.',
   },
 ]} />
 
 | Field | Meaning |
 |-------|---------|
 | **Time to event** | The countdown to the start of the event, **Now** while it is under way, or **Ended** once the predicted window has passed |
-| **Threshold** | The condition of the rule, such as **> 760** |
+| **Threshold** | The condition of the rule, such as **< 10** |
 | **Predicted value** | The forecast value at the crossing |
 | **Crossing at** | The predicted time of the crossing |
 | **Alarm** | The severity raised and since when, or **No alarm** |
@@ -281,8 +286,8 @@ a row to switch the card and the chart to that item.
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-items.webp',
-    alt: 'Items table of a Time to Threshold model sorted by time to event with severities per site',
-    caption: 'Sorted by the soonest crossing. Only site-energy-006 is predicted to reach 760.',
+    alt: 'Items table of a Time to Threshold model sorted by time to event with the severity of each generator',
+    caption: 'Sorted by the soonest crossing. Only generator-003 is predicted to reach the reserve.',
   },
 ]} />
 
@@ -330,7 +335,7 @@ meeting it is the end. The time from now to the start is the **time to event**.
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-event.svg',
-    alt: 'Diagram: the measured history up to Now, the dashed forecast rising above the threshold line and falling back, the shaded event between the two crossings, and the time to event from Now to the event start',
+    alt: 'Diagram: the measured history up to Now, the dashed forecast dropping below the threshold line and rising back, the shaded event between the two crossings, and the time to event from Now to the event start',
     caption: 'Events are searched only inside the prediction horizon.',
   },
 ]} />
@@ -371,8 +376,8 @@ The trigger condition is what the countdown counts down to:
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-rules-condition.webp',
-    alt: 'Manage rules dialog with the trigger condition highlighted: Simple mode, goes above, Value, 760, and the condition preview',
-    caption: 'Rule "Peak load": the event starts when the forecast goes above 760.',
+    alt: 'Manage rules dialog with the trigger condition highlighted: Simple mode, drops below, Value, 10, and the condition preview',
+    caption: 'Rule "Low fuel": the event starts when the forecast drops below 10.',
   },
 ]} />
 
@@ -389,8 +394,8 @@ Two actions make the time to event available outside the Result tab:
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-rules-actions.webp',
-    alt: 'Manage rules dialog with the Business entity field and Telemetry saving actions highlighted, and the telemetry key peak_load_eta',
-    caption: 'Telemetry saving writes the countdown to each item under peak_load_eta.',
+    alt: 'Manage rules dialog with the Business entity field and Telemetry saving actions highlighted, both switched off',
+    caption: 'Two actions publish the countdown outside the Result tab.',
   },
 ]} />
 
@@ -410,7 +415,7 @@ a **Major**, or a **Critical**. They are off by default, so turn on the ones you
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-rules-severity.webp',
-    alt: 'Manage rules dialog with Alarm creation highlighted: alarm type Peak load predicted and severity thresholds WARNING 3 days, MINOR off, MAJOR 1 day, CRITICAL 6 hours',
+    alt: 'Manage rules dialog with Alarm creation highlighted: alarm type Low fuel predicted and severity thresholds WARNING 7 days, MINOR 5 days, MAJOR 4 days, CRITICAL 2 days',
     caption: 'You set the alarm type and how close the event must be for each severity.',
   },
 ]} />
@@ -420,8 +425,8 @@ As the event gets closer, the alarm steps up to the most severe level whose thre
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/prediction/ttt-severity.svg',
-    alt: 'Diagram: a timeline toward the event start with No alarm, then WARNING from 3 days before, MAJOR from 1 day before, and CRITICAL from 6 hours before',
-    caption: 'The thresholds of the demo model: WARNING 3 days, MAJOR 1 day, CRITICAL 6 hours.',
+    alt: 'Diagram: a timeline toward the event start with No alarm, then WARNING from 7 days before, MINOR from 5 days before, MAJOR from 4 days before, and CRITICAL from 2 days before',
+    caption: 'The thresholds of the demo model: WARNING 7 days, MINOR 5 days, MAJOR 4 days, CRITICAL 2 days.',
   },
 ]} />
 
@@ -429,6 +434,10 @@ As the event gets closer, the alarm steps up to the most severe level whose thre
 
 The **Events** tab lists every predicted event of the model, across all items and rules. The chart shows the
 selected event on the forecast.
+
+In this example only generator-003 has reached its rule, so the list holds a single **Major** event. A real fleet
+usually has many at once, each carrying whichever severity you enabled for the rule — **Warning**, **Minor**,
+**Major**, or **Critical**.
 
 <ImageGallery images={[
   {
