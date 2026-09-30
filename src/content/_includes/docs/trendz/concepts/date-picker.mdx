@@ -1,0 +1,168 @@
+import DocLink from '@components/DocLink.astro';
+import ImageGallery from '@components/ImageGallery.astro';
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+The **date picker** sets the time range a view works with: Trendz only loads and analyzes data that falls inside this range. You find it in the toolbar above every view, and the same picker is used wherever Trendz asks for a period — in Anomaly Detection, Prediction, Vibration Analysis, and the Metric Explorer.
+
+A new view starts with **This Week**, in your browser's time zone.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/toolbar.png',
+    alt: 'New Trendz table view with the collapsed date picker set to This Week highlighted in the view toolbar',
+    caption: 'The date picker in the toolbar of a new view, set to This Week.',
+  },
+]} />
+
+## Absolute and relative ranges
+
+A time range is either absolute or relative:
+
+- An **absolute** range has fixed start and end dates, like *August 1 – August 10, 2026*. It always shows the same period, no matter when you open the view.
+- A **relative** range is described in relation to the current moment, like *last 7 days* or *this month*. It moves forward with time: a view set to **Last 7 days** shows a different week tomorrow than today.
+
+Use a relative range for views you open regularly and expect to show recent data, like monitoring dashboards. Use an absolute range to analyze a specific period, like an incident or a billing month.
+
+A relative range can also point to the **future** — **Tomorrow**, **Next 7 days**, **Next Month**. This is useful for views that show forecasts or planned values.
+
+## Open the date picker
+
+Click the date picker in the view toolbar. The picker has three parts:
+
+- **Presets** on the left — ready-made ranges like **Today** or **Last 30 days**.
+- **Use relative** / **Use absolute** under the presets — switches the right-hand side between the calendars and the relative range builder.
+- **Timezone** under the presets — opens the time zone settings.
+
+Every change applies immediately — there is no **Apply** button. The picker closes when you pick a preset, press **Esc**, or click outside it.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/open.png',
+    alt: 'Open date picker with the presets list, the Use relative and Timezone buttons on the left, and two calendars for September and October 2026 on the right',
+    caption: 'The open date picker: presets on the left, calendars on the right.',
+  },
+]} />
+
+## Presets
+
+Presets are the fastest way to pick a common range. They are grouped by unit; hover over or click a group to open it. The preset that matches the current range is highlighted.
+
+| Group | Presets |
+|-------|---------|
+| — | Today, Yesterday, Tomorrow |
+| **Days** | Last 7 days, Last 14 days, Last 30 days, Last 90 days, Next 7 days, Next 14 days, Next 30 days |
+| **Week** | This Week, Prev Week, Next Week, Last 2 weeks, Last 3 weeks, Last 4 weeks |
+| **Month** | This Month, Prev Month, Next Month, Last 3 months, Last 6 months, Last 12 months |
+| **Year** | This Year, Last year, Prev Year, Next Year, Last 3 years |
+
+How the presets count time:
+
+- **Last N** ranges include the current period. **Last 7 days** is the 6 previous days plus today.
+- **Next N** ranges also start with the current period. **Next 7 days** is today plus the 6 following days.
+- **This**, **Prev**, and **Next** cover exactly one whole calendar unit — the current, the previous, or the following one.
+- **Last year** is the last 365 days up to today, while **Prev Year** is the previous calendar year.
+- Weeks start on Monday.
+
+All presets are relative ranges.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/presets.png',
+    alt: 'Date picker with the Days group open, listing Last 7, 14, 30, 90 days and Next 7, 14, 30 days',
+    caption: 'The Days group of presets, with past and future ranges.',
+  },
+]} />
+
+## Set an absolute range
+
+The picker shows two calendars side by side. Use the arrows or the month and year dropdowns to move between months.
+
+<Steps>
+1. Click the first day of the range.
+
+2. Click the last day of the range. Both days are included.
+
+3. Optionally, set the exact time in the **From** and **To** fields under the calendars — hours, minutes, and seconds.
+</Steps>
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/absolute.png',
+    alt: 'Absolute range from September 1 to September 24, 2026 selected in the calendar, with From set to 10 h and To set to 12 h; the toolbar shows Sep.01.2026 10:00:00 - Sep.24.2026 12:00:00',
+    caption: 'An absolute range with exact start and end times.',
+  },
+]} />
+
+## Set a custom relative range
+
+When no preset fits, build your own relative range. Click **Use relative** to open the **Custom relative range** builder. It has two rows — **From** for the start of the range and **To** for its end. In each row, choose:
+
+- **Direction** — **last** (in the past), **this** (the current period), or **next** (in the future).
+- **Amount** — how many units. Not used with **this**.
+- **Unit** — minute, hour, day, week, month, quarter, or year.
+- **Alignment** — **from its start** rounds to the beginning of the unit, like midnight for a day; **at this exact time** keeps the current time of day.
+
+Examples:
+
+| From | To | Result |
+|------|----|--------|
+| last 3 days, from its start | this day, from its start | The 3 days before today, without today |
+| this day, from its start | next 3 days, from its start | Today and the next 2 days |
+| last 6 hours, at this exact time | this hour, at this exact time | The 6 hours up to the current moment |
+
+{/* TODO: verify rows 1 and 3 against the "Resolves to" line in the product (row 2 is confirmed) */}
+
+If the start of the range falls after its end, the builder shows **Not a valid range**, and the range is not applied until you fix one of the bounds.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/relative.png',
+    alt: 'Custom relative range builder with From set to this day from its start and To set to next 3 days from its start; Resolves to shows 2026-09-29 00:00:00 to 2026-10-02 00:00:00',
+    caption: 'A custom relative range and the exact time range it resolves to.',
+  },
+]} />
+
+## See the exact time range
+
+For a relative range, the date picker in the toolbar shows its name — like **Last 7 days** — rather than dates. To see the exact dates and times it covers right now:
+
+- Open the picker: the calendars highlight the days the range currently covers.
+- Click **Use relative**: the **Resolves to** line under the builder shows the exact start and end, down to the second, in the selected time zone.
+
+For an absolute range, the toolbar shows the dates directly, like `Aug.01.2026 - Aug.10.2026`, and adds times when they are set.
+
+## Change the time zone
+
+By default, the date picker uses your browser's time zone. Change it when the data belongs to a site in another time zone — for example, to see "today" as it is for a plant in another country.
+
+<Steps>
+1. Open the date picker and click **Timezone**.
+
+2. Open the time zone dropdown and start typing a city or region name, like `Kyiv` or `America`, to filter the list.
+
+3. Select the time zone. The view reloads with the new time zone.
+
+4. Click **Timezone** again to return to the range settings.
+</Steps>
+
+Under the dropdown, the picker shows the UTC offset of the selected time zone, whether it observes daylight saving time, and your browser's own time zone for comparison.
+
+When you change the time zone of an absolute range, the selected calendar days stay the same — the range now means those days in the new time zone.
+
+<ImageGallery images={[
+  {
+    src: '/src/assets/images/trendz/date-picker/timezone.png',
+    alt: 'Timezone pane of the date picker with Europe/Berlin selected, UTC offset UTC+02:00 CEST, daylight saving observed and in effect now, and the browser time zone shown as the same as selected',
+    caption: 'The Timezone pane with the selected time zone and its details.',
+  },
+]} />
+
+<Aside type="note">
+  A Trendz view embedded in a ThingsBoard dashboard with **Use dashboard time window** enabled takes both its time range and time zone from the dashboard. See <DocLink product={props.product} path="widget-settings">Widget settings</DocLink>.
+</Aside>
+
+## Related settings
+
+- **group by** — next to the date picker, sets how the time range is split into intervals on charts. See <DocLink product={props.product} path="group-by-time">Grouping by time</DocLink>.
+- **Hide date picker** — hides the date picker and the **group by** control when the view is shown on a dashboard or in full-screen mode. See <DocLink product={props.product} path="view-settings">View settings</DocLink>.
+- **Filter by date** — narrows the data inside the time range to certain hours, weekdays, or months. See <DocLink product={props.product} path="data-filtering">Data filtering</DocLink>.

@@ -1,26 +1,29 @@
 import ImageGallery from '~/components/ImageGallery.astro';
+import DocLink from '@components/DocLink.astro';
 
 To show how data changes over time, drag the **Date** field from the left panel onto the **X-axis** section of a view. Trendz will split the selected time range into intervals and apply the configured aggregation function to the data in each interval. If a bucket contains no data, it is displayed as `-`.
 
 ## RAW Mode
 
-The default Date aggregation is **RAW**. In RAW mode the bucket size is not fixed in the view — instead, the user controls it at runtime using the **Group By** dropdown next to the time range picker.
+The default Date aggregation is **RAW**. In RAW mode the bucket size is not fixed in the view — instead, the user controls it at runtime using the **group by** control next to the <DocLink product={props.product} path="date-picker">date picker</DocLink>.
 
 ```plaintext
-  Time range: last 7 days   Group By: Day
+  Time range: last 7 days   group by: day
 
   Mon     Tue     Wed     Thu     Fri     Sat     Sun
   ╔═════╗ ╔═════╗ ╔═════╗ ╔═════╗ ╔═════╗ ╔═════╗ ╔═════╗
   ║ avg ║ ║ avg ║ ║ avg ║ ║ avg ║ ║ avg ║ ║ avg ║ ║ avg ║
   ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝
 
-  Same view, Group By: Hour → 168 buckets instead of 7
+  Same view, group by: hour → 168 buckets instead of 7
 ```
 
-Available **Group By** values:
+Available **group by** units:
 
 | Value | Bucket size |
 |-------|-------------|
+| Year | One bucket per calendar year |
+| Quarter | One bucket per calendar quarter |
 | Month | One bucket per calendar month |
 | Week | One bucket per calendar week |
 | Day | One bucket per calendar day |
@@ -30,17 +33,17 @@ Available **Group By** values:
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/date-raw-group.png',
-    alt: 'Trendz view with the Date field on the X-axis and the Group By dropdown set to Day',
-    caption: 'RAW mode — the Group By dropdown next to the time range picker controls bucket size at runtime.',
+    alt: 'Line chart with DATE (RAW) on the X-axis, the date picker set to Last 30 days, and the group by control set to day',
+    caption: 'RAW mode — the group by control next to the date picker controls bucket size at runtime.',
   },
 ]} />
 
 ### Group by amount
 
-By default the **Group By** dropdown produces one bucket per unit, like one bucket per hour or one bucket per day. To group several units into a single bucket, like every 6 hours or every 3 days, enable **Group by amount** in the view's **General** settings. Once enabled, a second dropdown named **group by amount** appears next to the time-range picker. Its value is the multiplier applied to the Group By unit.
+By default the **group by** control produces one bucket per unit, like one bucket per hour or one bucket per day. To group several units into a single bucket, like every 6 hours or every 3 days, enable **Group by amount** in the view's **General** settings. Once enabled, an amount field appears inside the **group by** control, before the unit — for example `group by: 6 hour`. Its value is the number of units merged into one bucket.
 
 ```plaintext
-  Time range: last 7 days   Group By: Hour   Group by amount: 6
+  Time range: last 7 days   group by: 6 hour
 
   ╔═══════════════╗ ╔═══════════════╗ ╔═══════════════╗  …
   ║ 00:00 – 05:59 ║ ║ 06:00 – 11:59 ║ ║ 12:00 – 17:59 ║  …
@@ -50,28 +53,28 @@ By default the **Group By** dropdown produces one bucket per unit, like one buck
   168 hourly buckets → 28 six-hour buckets
 ```
 
-Group by amount is available only for **RAW** mode and only when the **Group By** dropdown is visible. After changing the amount, click **Build report** to refresh the view.
+Group by amount is available only for **RAW** mode and only when the **group by** control is visible. After changing the amount, click **Build report** to refresh the view.
 
 <ImageGallery images={[
   {
     src: '/src/assets/images/trendz/group-by-amount-enable.png',
-    alt: 'Chart settings panel with the Enable group by amount checkbox highlighted',
+    alt: 'Chart settings panel, General section, with the Group by amount checkbox highlighted',
     caption: 'Enable the feature in the view\'s General settings.',
   },
   {
     src: '/src/assets/images/trendz/group-by-amount-toolbar.png',
-    alt: 'Time range toolbar with the group by amount dropdown set to 1',
-    caption: 'The group by amount dropdown appears next to the Group By dropdown.',
+    alt: 'View toolbar with the group by control showing the amount field set to 2 before the hour unit',
+    caption: 'The amount field appears inside the group by control, before the unit.',
   },
   {
     src: '/src/assets/images/trendz/group-by-amount-set.png',
-    alt: 'Group by amount set to 6 with the Build report button highlighted',
+    alt: 'group by control set to 2 hour with the Build report button highlighted',
     caption: 'Set the amount and click Build report to apply it.',
   },
   {
     src: '/src/assets/images/trendz/group-by-amount-result.png',
-    alt: 'Resulting table with 6-hour buckets every 06:00, 12:00, 18:00, 00:00',
-    caption: 'Result: hourly buckets merge into 6-hour windows.',
+    alt: 'Resulting table with 2-hour buckets at 00:00, 02:00, 04:00, 06:00',
+    caption: 'Result: hourly buckets merge into 2-hour windows.',
   },
 ]} />
 
@@ -81,7 +84,7 @@ For more precise control you can fix the grouping directly in the view configura
 
 | Option | Groups data by | Example label |
 |--------|---------------|---------------|
-| **RAW** | User-controlled via Group By dropdown | — |
+| **RAW** | User-controlled via the **group by** control | — |
 | **MINUTE** | Minute of the hour (0–59) | `45` |
 | **HOUR** | Hour of the day (0–23) | `23` |
 | **DAY** | Day of the week (Mon–Sun) | `Monday` |
@@ -98,7 +101,7 @@ For more precise control you can fix the grouping directly in the view configura
 | **QUARTER** | Quarter of the year (1–4) | `1` |
 | **YEAR** | Calendar year | `2020` |
 
-Day and week boundaries are calculated using your local browser timezone.
+Day and week boundaries are calculated in the time zone selected in the <DocLink product={props.product} path="date-picker#change-the-time-zone">date picker</DocLink> — your browser's time zone by default.
 
 For **START_OF_WEEK** and **WEEK_OF_YEAR**, the bucket label anchors to Monday of that week (or its week number) even if Monday falls outside the selected time range — only data within the selected range is aggregated under it.
 

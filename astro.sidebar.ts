@@ -3696,6 +3696,7 @@ export const trendzSidebar: SidebarConfig = [
 				items: [
 					'docs/trendz/concepts/business-entities',
 					'docs/trendz/telemetry-aggregation',
+					'docs/trendz/date-picker',
 					'docs/trendz/group-by-time',
 					'docs/trendz/group-by-category',
 					'docs/trendz/data-filtering',
