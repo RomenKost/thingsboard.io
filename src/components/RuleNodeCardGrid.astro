@@ -140,14 +140,11 @@ const processedItems: ProcessedItem[] = await Promise.all(
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	/* A wide card takes two of the three desktop columns; on two columns it takes the row. Its image area
-	   is twice as wide, so the ratio is doubled to keep every card in the row the same height. */
 	.rn-card--wide {
 		grid-column: span 2;
 	}
 
-	/* Its own width covers two columns and the gap between them, so the height is taken from one
-	   column: (width - gap) / 2 * 9 / 16. That puts every title in the row on the same line. */
+	/* Height is one column's 16:9, (width − gap) / 2 × 9/16, so titles in a row line up with the narrow cards */
 	.rn-card--wide .rn-card__img-wrap {
 		aspect-ratio: auto;
 		height: calc((100cqw - 1rem) * 0.28125);
