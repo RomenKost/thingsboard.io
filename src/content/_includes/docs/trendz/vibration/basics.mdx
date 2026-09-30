@@ -2,10 +2,15 @@ import { Aside } from '@astrojs/starlight/components';
 import DocLink from '@components/DocLink.astro';
 import ImageGallery from '@components/ImageGallery.astro';
 
-This page introduces the concepts behind vibration analysis for readers who are new to the field. It covers
-what a vibration sensor records, which values Trendz derives from the recording, and how those values lead to
-a conclusion like "bearing damage on the outer race". Each section closes with a pointer to where the concept
-appears in Trendz, so you can verify it on your own machines.
+**Vibration analysis** is the measurement of how a machine vibrates and the interpretation of that signal to
+find developing faults, such as unbalance, misalignment, looseness, and bearing damage, weeks before they cause
+a failure. It is the most widely used technique in predictive maintenance for rotating machines: pumps, fans,
+motors, compressors, and gearboxes.
+
+This page explains the concepts behind it for readers who are new to the field: what a vibration sensor
+records, which values Trendz derives from the recording, and how those values lead to a conclusion like
+"bearing damage on the outer race". Each section closes with a pointer to where the concept appears in Trendz,
+so you can verify it on your own machines.
 
 ## Sensors and samples
 
@@ -34,7 +39,7 @@ analyzed: half the sample rate.
 **See it in Trendz:** the telemetry format for samples is described in
 <DocLink product={props.product} path='vibration/getting-started#trendz-vibration-data-input-formats'>Getting Started</DocLink>.
 
-## Vibration metrics
+## Vibration metrics: RMS, peak-to-peak, and crest factor
 
 A sample is too large to read directly, so Trendz reduces it to a small set of values, much as a sound level
 meter reduces noise to a single decibel figure.
@@ -91,6 +96,11 @@ A Class II pump reading 3.1 mm/s is in zone C, while the same reading on a Class
 Once the class is set in <DocLink product={props.product} path='vibration/interface/properties-tab#machine-details'>Machine details</DocLink>, every machine in the model receives a zone letter alongside its readings, and
 the zone boundaries appear as reference lines on the velocity RMS trend.
 
+ISO 10816-1 has been withdrawn and replaced by [ISO 20816-1](https://www.iso.org/standard/63180.html), which
+combines it with the shaft vibration standard ISO 7919-1 and keeps the A to D zone scheme. The class limits in
+the table above come from ISO 10816-1. They are still the values most vibration sensors, handbooks, and
+analysts quote, which is why Trendz uses them.
+
 <Aside type="note">
   ISO 10816-1 grades the overall level only. It answers how severe the vibration is, not what causes it. The
   following sections cover the analysis that identifies the cause.
@@ -100,7 +110,7 @@ the zone boundaries appear as reference lines on the velocity RMS trend.
 <DocLink product={props.product} path='vibration/interface/overview-tab#vibration-level-view'>Overview tab</DocLink>, and they can
 drive alarms as described in <DocLink product={props.product} path='vibration/monitoring#alarm-rules'>Monitoring and alarms</DocLink>.
 
-## Waveform and spectrum
+## Time waveform and FFT spectrum
 
 The **time waveform** is the sample plotted as recorded: vibration against time. It reveals impacts, events that
 repeat once per revolution, and the general character of the motion.
@@ -205,7 +215,7 @@ Without it, Trendz still tracks levels but cannot attribute what it sees.
 <DocLink product={props.product} path='vibration/interface/analyzer-tab#overlays'>Analyzer overlays</DocLink> mark the
 1× line and its harmonics on any spectrum.
 
-## Fault signatures
+## Fault signatures: unbalance, misalignment, looseness, and bearing damage
 
 Four mechanical faults account for most problems in rotating machinery, and each leaves a recognizable pattern
 in the spectrum.
@@ -269,7 +279,7 @@ The scores are on the <DocLink product={props.product} path='vibration/interface
 and the <DocLink product={props.product} path='vibration/interface/overview-tab#shaft-faults-view'>Shaft faults view</DocLink>
 shows the trend of each band.
 
-## Bearing faults and envelope analysis
+## Bearing fault frequencies (BPFO, BPFI, BSF, FTF) and envelope analysis
 
 A rolling bearing consists of four parts: an outer race, an inner race, a set of balls or rollers between them,
 and a cage that keeps the rolling elements spaced. When a defect forms on the outer race, each rolling element
