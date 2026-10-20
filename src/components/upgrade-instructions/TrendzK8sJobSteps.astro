@@ -52,6 +52,7 @@ const k8sJobLogOutput =
 
 <h3>Stop Trendz</h3>
 <Code code={`kubectl scale deployment trendz-app-deployment --replicas=0\nkubectl wait --for=delete pod -l app=trendz-app-pod-label --timeout=120s`} lang="bash" />
+<p>If the pods are already gone, <code>kubectl wait</code> may print <code>no matching resources found</code>. This is expected.</p>
 
 <h3>Create the upgrade job</h3>
 <Code code={k8sUpgradeJob} lang="yaml" title="trendz-upgrade.yml" meta="download='trendz-upgrade.yml'" />

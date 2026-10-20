@@ -71,6 +71,8 @@ const javaGuideLink =
 		<p>Select the correct kube-config context before running any commands:</p>
 		<Code code="kubectl config get-contexts" lang="bash" />
 		<Code code="kubectl config use-context <your-config-name>" lang="bash" />
+		<p>Set <code>trendz</code> as the default namespace, so the commands below run in it:</p>
+		<Code code="kubectl config set-context --current --namespace=trendz" lang="bash" />
 		<h3>Back up the database</h3>
 		<p>Back up the <code>trendz</code> database with <code>pg_dump</code> or your PostgreSQL provider's backup tools.</p>
 	</section>
@@ -314,6 +316,7 @@ const javaGuideLink =
 									<div class="starlight-aside__content">
 										<p>No upgrade job is needed. Set the image versions to <strong>{v.version}</strong> in <code>trendz-app-deployment.yml</code> and <code>trendz-python-executor-deployment.yml</code>, then apply them:</p>
 										<Code code={`kubectl apply -f trendz-python-executor-deployment.yml\nkubectl apply -f trendz-app-deployment.yml`} lang="bash" />
+										<p>From any other version, follow the steps below.</p>
 									</div>
 								</aside>
 							)}
